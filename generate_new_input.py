@@ -1,7 +1,7 @@
 '''
 Input file structure:
 C(coloumns) R(rows) S(number of snakes)
-S integer values(if s is 5, there will be 5 values here)
+S values(if s is 5, there will be 5 values here)
 {random generated table with R*C}
 
 Input file example:
@@ -29,6 +29,7 @@ def input_data():
     function that takes rows, coloumns and the number of snakes as inputs from the user
     return R, C, S as an array
     '''
+
     # rows number
     R = input("type how many rows you wanna have, the maximum is 5000 rows\n--> ")
     while R.isdigit() == False:
@@ -51,35 +52,35 @@ def input_data():
     int(S)
 
     # creating the array
-    data = (R, C, S)
+    DATA = (R, C, S)
 
-    return data
+    return DATA
 
-def generate(data):
+def generate(DATA):
     '''
     create the file with different name each time
     return the file name, R, C and s in a list
     '''
 
-    #taking data from input
-    R = int(data[0])
-    C = int(data[1])
-    S = int(data[2])
+    #taking DATA from input
+    R = int(DATA[0])
+    C = int(DATA[1])
+    S = int(DATA[2])
 
     # generating the file
     FILE_ID = str(uuid.uuid4())
     input_file_name = "input_" + FILE_ID + ".txt"
 
     # writing in the file
-    f = open("raw_inputs/" + input_file_name, "w")
-    f.write(str(C) + " " + str(R) + " " + str(S) + "\n")
-    for i in range(0, S, 1):
-        f.write(str(random.randint(0, 9)) + " ")
-    f.write("\n")
-    for i in range(0, C, 1):
-        for i in range(0, R, 1):
+    with open("raw_inputs/" + input_file_name, 'w') as f:
+        f.write(str(C) + " " + str(R) + " " + str(S) + "\n")
+        for i in range(0, S, 1):
             f.write(str(random.randint(0, 9)) + " ")
         f.write("\n")
+        for i in range(0, C, 1):
+            for i in range(0, R, 1):
+                f.write(str(random.randint(0, 9)) + " ")  
+            f.write("\n")
     f.close()
 
     return FILE_ID
